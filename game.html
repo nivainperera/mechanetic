@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<link rel="shortcut icon" type="image/jpg" href="mechanavigate.png"/>
+<html>
+  <head>
+    <title>Mechanetic</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <link rel="stylesheet" href="style.css">
+
+    <style type="text/css">
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-weight: bold;
+      }
+
+      button {
+        width: 300px;
+        height: 80px;
+        color: yellow;
+        background-color: black;
+        text-shadow: 0 0px 20px yellow;
+      }
+
+
+      #street-view {
+        height: 100%;
+        filter: invert(1);  
+      }
+
+      #floating-panel {
+        position: absolute;
+        top: 0px;
+        left: 6%;
+        z-index: 5;
+        background-color: black;
+        color: yellow;
+        text-shadow: 0 0px 20px yellow;
+        padding: 5px;
+        text-align: center;
+        font-family: "Roboto", "sans-serif";
+        line-height: 30px;
+        padding-left: 10px;
+        width: 100%;
+        height: 16.5%;
+      }
+
+
+      #floating-panel {
+        margin-left: -100px;
+      }    
+    </style>
+    <script>
+      // Set the starting score of the player to 0
+      let score = 0
+
+      let panorama
+
+      // Set different places where the player will be spawned
+      var places = [
+          [{ lat: -37.809575,  lng: 144.963828 },  {country: 'RMIT'}], // RMIT, Melbourne
+          [{ lat: -37.549999,  lng: 143.850006 },  {country: 'Ballarat'}], // Ballarat
+          [{ lat: -25.3444,  lng: 131.0369 },  {country: 'Uluru'}], // Uluru
+          [{ lat: -33.890842,  lng: 151.274292 },  {country: 'Bondi Beach'}], // Bondi Beach
+          [{ lat: -33.852222,  lng: 151.210556 },  {country: 'Sydney Harbour Bridge'}], // Sydney Harbour Bridge
+          
+      ]
+      let currentPlace = places[Math.floor(Math.random() * (places.length))]  // Pick a random place to be spawned
+      let coordinates = currentPlace[0] // Get coordinates
+      let country = currentPlace[1].country // Get the name of the country
+
+      // Reload game environment when a round is over
+      let reconfigure = () => { 
+        document.getElementById("score").innerHTML = "Your current score is: " + score
+        currentPlace = places[Math.floor(Math.random() * (places.length))]
+        coordinates = currentPlace[0]
+        country = currentPlace[1].country
+
+        initialize()
+      }
+
+      // Check if Quiz is correct and then execute reconfiguring function
+      const Quiz= () => {
+        var Quiz = window.prompt("What is the location?")
+        if(Quiz === country) {
+          score++
+          alert("Correct! Current Score: " + score)
+          reconfigure()
+        } else {
+          score = 0
+          alert("Incorrect! Current Score: " + score)
+          reconfigure()
+        }
+      }
+
+      // Set and configure streetview 
+      function initialize() {
+        panorama = new google.maps.StreetViewPanorama(
+          document.getElementById("street-view"),
+          {
+            position: coordinates,
+            pov: { heading: 165, pitch: 0 },
+            zoom: 1,
+          }
+        )
+      }    
+    </script>
+  </head>
+  <body>
+
+    
+    <!-- The Quiz panel on top of the street view -->
+    <div id="floating-panel">
+      <h1>Mechanavigate</h1>
+      <a href="index.html" class="game-home-btn">< Home</a>
+      <h2 id="score"></h2>
+      <button class="quiz-button" onclick="Quiz()">What is the location?</button>
+    </div>
+
+    <!-- Street view -->
+    <div id="street-view"></div>
+
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDc4edgXlWMbaGdM7-iuuyeNvvJgprhi_k&callback=initialize&libraries=&v=weekly"
+      async
+    ></script>
+  </body>
+</html>

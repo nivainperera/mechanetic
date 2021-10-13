@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Learn Page Manual</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.js"></script>
+<link rel="stylesheet" href="style.css">
+<link rel="shortcut icon" type="image/jpg" href="mechanavigate.png"/>
+
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+
+<body>
+<style>
+    #map {
+        position: fixed;
+        width: 50%;
+    }
+    #features {
+        width: 50%;
+        margin-left: 50%;
+        font-family: sans-serif;
+        overflow-y: scroll;
+        background-color: black;
+        color: yellow;
+        font-weight: bold;
+    }
+    section {
+        padding: 50px 50px;
+        line-height: 25px;
+        border-bottom: 1px solid black;
+        opacity: 0.25;
+        font-size: 20px;
+        font-family: 'Roboto', sans-serif;
+
+    }
+    section.active {
+        opacity: 1;
+    }
+    section:last-child {
+        border-bottom: none;
+        margin-bottom: 500px;
+    }
+    
+/* scroll bar */
+::-webkit-scrollbar {
+    width: 15px;
+}
+::-webkit-scrollbar-track {
+    background: #3d3d3d;
+}
+::-webkit-scrollbar-thumb {
+    background: rgb(255, 255, 0);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(184, 184, 0);
+}
+</style>
+
+<div id="map"></div>
+<div id="features">
+    <section id="Uluru" class="active">
+        <h3>Uluru</h3>
+        <p>
+            Uluru is often referred to as the “heart of Australia”, as it is located in the centre of Australia.  Uluru is more than 550 million years old and is a sacred site to the Anangu people. Uluru is 348 metres tall.
+        </p>
+    </section>
+
+    <section id="Ballarat">
+        <h3>Ballarat</h3>
+        <p>
+            Ballarat is a city in Victoria, Australia, with a population of 101,588 people, located on the Yarrowee River in the Central Highlands. Ballarat is well-known for its Victorian-era history, culture, and well-preserved legacy. Gold was discovered in Ballarat on August 18, 1851.
+        </p>
+    </section>
+
+    <section id="Twelve Apostles">
+        <h3>Twelve Apostles</h3>
+        <p>
+            The Twelve Apostles are a series of rock formations formed by the continual erosion of mainland limestone cliffs by the Southern Ocean's water and wind. Initially, they were known as Sow and Piglets. The Sow was Mutton Bird Island, and her Piglets were the Twelve Apostles.
+        </p>
+    </section>
+
+    <section id="Great Ocean Road">
+        <h3>Great Ocean Road</h3>
+        <p>
+            The Great Ocean Road was built in 1919 to provide road transit to the region and to provide jobs for hundreds of Australian soldiers returning from World War I. The route is named for Australian soldiers who died in World War I, and the Memorial Arch at the eastern end honours their sacrifice.
+        </p>
+    </section>
+
+    <section id="Sydney Harbour Bridge">
+        <h3>Sydney Harbour Bridge</h3>
+        <p>
+            The construction of the Sydney Harbour Bridge began on July 28, 1923, and was finished eight years later with the help of 1,400 employees. The construction employed over six million hand driven rivets, 53,000 tonnes of steel, and 272,000 gallons of paint. 
+        </p>
+    </section>
+
+    <section id="Sydney Opera House">
+        <h3>Sydney Opera House</h3>
+        <p>
+            In 1956, 233 designs were submitted for the worldwide design competition for the Sydney Opera House. Jørn Utzon of Denmark was named the winner, and he was awarded ₤5000 for his design.
+        </p>
+    </section>
+
+    <section id="Bondi Beach">
+        <h3>Bondi Beach</h3>
+        <p>
+            The name “Bondi” is derived from an Aboriginal phrase that means “water breaking over rocks” or “noise of water breaking over rocks”, respectively. However, a search of the Australian Museum yields another reference to the term “Bondi”. For them, it represents the location of a fight with “boondi” sticks. “Boondi” simply means “fighting sticks” in this context.
+        </p>
+    </section>
+
+    <section id="Surfers Paradise">
+        <h3>Surfers Paradise</h3>
+        <p>
+            Surfers, which is 83 kilometres from Brisbane, has a distinct place in the Gold Coast's iconography. The town and beach serve as a metaphor for the lifestyle and aspirations of the people who visit the area for vacation or to live. These people aren't merely visiting a sunny location for a vacation. They're on their way to a 'surfer's paradise.' It's a strong and evocative image.
+        </p>
+    </section>
+
+    <section id="Great Barrier Reef">
+        <h3>Great Barrier Reef</h3>
+        <p>
+            The Great Barrier Reef is the largest reef system in the world. The reef is vast, with about 3,000 distinct reefs, 900 islands, and a length of 2,600 kilometres. Even from space, this magnificent living system can be seen. The reef's thriving corals are now perched on old, decrepit structures. These ancient corals could be as old as 20 million years!
+        </p>
+        <p>
+            <br><br><br><br><br>
+            <a class="back-learn" href="index.html">Click Here To Go Back Home</a>
+        </p>
+    </section>
+
+</div>
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1Ijoibml2YWlucCIsImEiOiJja3NlZmhlZ24wenF5Mm5sY2xtdnEwYjA0In0.PBmSfHOGlBzOG4_fXD_zbw';
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/satellite-v9',
+        center: [131.0369, -25.3444],
+        bearing: -50.9,
+        zoom: 13,
+        speed: 1,   
+        pitch: 50,
+    });
+
+    const chapters = {
+        'Uluru': {
+            center: [131.0369, -25.3444],
+            zoom: 13,
+            speed: 1,   
+            pitch: 50,
+            bearing: -50.9,
+        },
+        'Ballarat': {
+            center: [143.850006, -37.549999],
+            pitch: 50,
+            speed: 1,
+            zoom: 14,
+        },
+        'Twelve Apostles': {
+            center: [143.097536, -38.662529],
+            zoom: 13,
+            speed: 1,   
+            pitch: 50,
+            bearing: -50.9,
+        },
+        'Great Ocean Road': {
+            center: [143.391618, -38.680564],
+            zoom: 17,
+            speed: 1,   
+            pitch: 50,
+            bearing: -50.9,
+        },
+        'Sydney Harbour Bridge': {
+            center: [151.210556, -33.852222],
+            bearing: -85.9,
+            zoom: 15,
+            speed: 1,      
+            pitch: 50,
+        },
+        'Sydney Opera House': {
+            center: [151.215256, -33.856159],
+            zoom: 15,
+            pitch: 50,
+            speed: 1,
+            bearing: -130.9,
+        },
+        'Bondi Beach': {
+            center: [151.274292, -33.890842],
+            bearing: -40.9,
+            zoom: 15,
+            speed: 1,    
+            pitch: 50,
+        },
+        'Surfers Paradise': {
+            center: [153.429642, -28.000767],
+            bearing: 50,
+            zoom: 14,
+            pitch: 50,
+            speed: 1,
+        },
+        'Great Barrier Reef': {
+            center: [146.8145698649376, -18.002652407954614],
+            zoom: 8,
+            pitch: 50,
+            speed: 1,
+            bearing: -130.9,
+        },
+    };
+
+    let activeChapterName = 'Uluru';
+    function setActiveChapter(chapterName) {
+        if (chapterName === activeChapterName) return;
+
+        map.flyTo(chapters[chapterName]);
+
+        document.getElementById(chapterName).classList.add('active');
+        document.getElementById(activeChapterName).classList.remove('active');
+
+        activeChapterName = chapterName;
+    }
+
+    function isElementOnScreen(id) {
+        const element = document.getElementById(id);
+        const bounds = element.getBoundingClientRect();
+        return bounds.top < window.innerHeight && bounds.bottom > 0;
+    }
+
+    // On every scroll event, check which element is on screen
+    window.onscroll = () => {
+        for (const chapterName in chapters) {
+            if (isElementOnScreen(chapterName)) {
+                setActiveChapter(chapterName);
+                break;
+            }
+        }
+    };
+</script>
+
+</body>
+</html>

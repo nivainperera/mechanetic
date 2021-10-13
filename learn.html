@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Learn</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="shortcut icon" type="image/jpg" href="mechanavigate.png"/>
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+<body>
+
+
+    <body>
+        <nav class="navbar">
+          <div class="brand-title">MECHANETIC</div>
+          <a href="#" class="toggle-button">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </a>
+          <div class="navbar-links">
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="learn-start.html">Learn</a></li>
+              <li><a href="quiz-index.html">Quiz</a></li>
+              <li><a href="highscores.html">Leaderboard</a></li>
+              <li><a href="game.html">Game</a></li>
+              <li><a href="profile.html">Profile</a></li>
+            </ul>
+          </div>
+        </nav>
+      </body>
+    
+    
+
+     <style>
+        body { margin: 0; padding: 0; }
+        #map { position: absolute; top: 60px; bottom: 0; width: 100%; }
+    </style>
+
+<style>
+    .map-overlay-container {
+        position: absolute;
+        width: 45%;
+        top: 70px;
+        left: 10px;
+        padding: 10px;
+        z-index: 1;
+    }
+
+    .map-overlay {
+        font: 20px 'Roboto', sans-serif;
+        background-color: black;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 0px 30px black;
+        color: yellow;
+    }
+
+    .map-overlay h2,
+    .map-overlay p {
+        margin: 0 0 10px;
+    }
+</style>
+
+<div id="map"></div>
+
+<div class="map-overlay-container">
+    <div class="map-overlay">
+        <h2 id="location-title"></h2>
+        <p id="location-description"></p>
+    </div>
+</div>
+
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1Ijoibml2YWlucCIsImEiOiJja3NlZmhlZ24wenF5Mm5sY2xtdnEwYjA0In0.PBmSfHOGlBzOG4_fXD_zbw';
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/satellite-v9',
+        center: [133.311278, -24.157649],
+        maxZoom: 16,
+        minZoom: 9,
+        zoom: 3
+    });
+
+    const title = document.getElementById('location-title');
+    const description = document.getElementById('location-description');
+
+    const locations = [
+        {
+            'id': '1',
+            'title': 'Uluru',
+            'description':
+                "Uluru is often referred to as the “heart of Australia”, as it is located in the centre of Australia.  Uluru is more than 550 million years old and is a sacred site to the Anangu people. Uluru is 348 metres tall.",
+            'camera': {
+                center: [131.0369, -25.3444],
+                bearing: -50.9,
+                zoom: 13,
+                speed: 1,   
+                pitch: 50,
+             
+            }
+        },
+    
+        {
+            'id': '2',
+            'title': 'Ballarat',
+            'description':
+                "Ballarat is a city in Victoria, Australia, with a population of 101,588 people, located on the Yarrowee River in the Central Highlands. Ballarat is well-known for its Victorian-era history, culture, and well-preserved legacy. Gold was discovered in Ballarat on August 18, 1851.",
+            'camera': {
+                center: [143.850006, -37.549999],
+                zoom: 14,
+                pitch: 50,
+                speed: 1
+            }
+        },
+
+        {
+            'id': '3',
+            'title': 'Twelve Apostles',
+            'description':
+                "The Twelve Apostles are a series of rock formations formed by the continual erosion of mainland limestone cliffs by the Southern Ocean's water and wind. Initially, they were known as Sow and Piglets. The Sow was Mutton Bird Island, and her Piglets were the Twelve Apostles.",
+            'camera': {
+                center: [143.097536, -38.662529],
+                bearing: -50.9,
+                zoom: 13,
+                speed: 1,   
+                pitch: 50,
+             
+            }
+        },
+
+        {
+            'id': '4',
+            'title': 'Great Ocean Road',
+            'description':
+                "The Great Ocean Road was built in 1919 to provide road transit to the region and to provide jobs for hundreds of Australian soldiers returning from World War I. The route is named for Australian soldiers who died in World War I, and the Memorial Arch at the eastern end honours their sacrifice.",
+            'camera': {
+                center: [143.391618, -38.680564],
+                bearing: -50.9,
+                zoom: 17,
+                speed: 1,   
+                pitch: 50,             
+            }
+        },
+
+        {
+            'id': '5',
+            'title': 'Sydney Harbour Bridge',
+            'description':
+                "The construction of the Sydney Harbour Bridge began on July 28, 1923, and was finished eight years later with the help of 1,400 employees. The construction employed over six million hand driven rivets, 53,000 tonnes of steel, and 272,000 gallons of paint.",
+            'camera': {
+                center: [151.210556, -33.852222],
+                bearing: -85.9,
+                zoom: 18,
+                speed: 1,      
+                pitch: 50,
+            }
+        },
+
+        {
+            'id': '6',
+            'title': 'Sydney Opera House',
+            'description':
+                "In 1956, 233 designs were submitted for the worldwide design competition for the Sydney Opera House. Jørn Utzon of Denmark was named the winner, and he was awarded ₤5000 for his design.",
+            'camera': {
+                center: [151.215256, -33.856159],
+                bearing: -130.9,
+                zoom: 18,
+                pitch: 50,
+                speed: 1
+            }
+        },
+
+        {
+            'id': '7',
+            'title': 'Bondi Beach',
+            'description':
+                "The name “Bondi” is derived from an Aboriginal phrase that means “water breaking over rocks” or “noise of water breaking over rocks”, respectively. However, a search of the Australian Museum yields another reference to the term “Bondi”. For them, it represents the location of a fight with “boondi” sticks. “Boondi” simply means “fighting sticks” in this context.",
+            'camera': {
+                center: [151.274292, -33.890842],
+                bearing: -40.9,
+                zoom: 15,
+                speed: 1,    
+                pitch: 50,            
+            }
+        },
+
+        {
+            'id': '9',
+            'title': 'Surfers Paradise',
+            'description':
+                "Surfers, which is 83 kilometres from Brisbane, has a distinct place in the Gold Coast's iconography. The town and beach serve as a metaphor for the lifestyle and aspirations of the people who visit the area for vacation or to live. These people aren't merely visiting a sunny location for a vacation. They're on their way to a 'surfer's paradise.' It's a strong and evocative image.",
+            'camera': {
+                center: [153.429642, -28.000767],
+                bearing: 50,
+                zoom: 16,
+                pitch: 50,
+                speed: 1
+            }
+        },
+
+        {
+            'id': '8',
+            'title': 'Great Barrier Reef',
+            'description':
+                "The Great Barrier Reef is the largest reef system in the world. The reef is vast, with about 3,000 distinct reefs, 900 islands, and a length of 2,600 kilometres. Even from space, this magnificent living system can be seen. The reef's thriving corals are now perched on old, decrepit structures. These ancient corals could be as old as 20 million years!",
+            'camera': {
+                center: [146.8145698649376, -18.002652407954614],
+                bearing: -130.9,
+                zoom: 1,
+                pitch: 50,
+                speed: 1
+            }
+        },
+    ];
+
+    function highlightBorough(code) {
+        // Only show the polygon feature that corresponds to `borocode` in the data.
+        map.setFilter('highlight', ['==', 'borocode', code]);
+    }
+
+    function playback(index) {
+        title.textContent = locations[index].title;
+        description.textContent = locations[index].description;
+
+        highlightBorough(locations[index].id ? locations[index].id : '');
+
+        // Animate the map position based on camera properties.
+        map.flyTo(locations[index].camera);
+
+        
+
+        
+        map.once('moveend', () => { 
+            // Duration the slide is on screen after interaction.
+            window.setTimeout(() => {
+                // Increment index, looping back to the first after the last location.
+                index = (index + 1) % locations.length;
+                playback(index);
+            }, 15000); // After callback, show the location for 15 seconds.
+        });
+    }
+
+    // Display the last title/description first.
+    title.textContent = locations[locations.length - 1].title;
+    description.textContent = locations[locations.length - 1].description;
+
+    map.on('load', () => {
+        map.addSource('boroughs', {
+            'type': 'vector',
+            'url': 'mapbox://mapbox.8ibmsn6u'
+        });
+        map.addLayer(
+            {
+                'id': 'highlight',
+                'type': 'fill',
+                'source': 'boroughs',
+                'source-layer': 'original',
+                'paint': {
+                    'fill-color': '#fd6b50',
+                    'fill-opacity': 0.25
+                },
+                'filter': ['==', 'borocode', '']
+            },
+            // Place polygon under the neighborhood labels.
+            'settlement-subdivision-label'
+        );
+
+        // Start the playback animation for each borough.
+        playback(0);
+    });
+</script>
+
+</body>
+</html>
